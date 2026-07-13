@@ -2,7 +2,7 @@
 
 
 def test_import_client():
-    from src.ikuai_mcp.client import IKuaiClient
+    from ikuai_mcp.client import IKuaiClient
     assert IKuaiClient is not None
 
 
@@ -12,4 +12,4 @@ def test_import_all_tools():
         "auth", "wireless", "advanced", "logs", "settings",
     ]
     for mod in modules:
-        __import__(f"src.ikuai_mcp.tools.{mod}")
+        __import__(f"ikuai_mcp.tools.{mod}")
