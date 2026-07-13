@@ -1,7 +1,7 @@
 # 🚀 iKuai MCP Server
 
-[![PyPI version](https://img.shields.io/pypi/v/ikuai-mcp-server)](https://pypi.org/project/ikuai-mcp-server/)
-[![Python](https://img.shields.io/pypi/pyversions/ikuai-mcp-server)](https://pypi.org/project/ikuai-mcp-server/)
+[![PyPI](https://img.shields.io/badge/PyPI-v1.0.0-blue)](https://pypi.org/project/ikuai-mcp-server/)
+[![Python](https://img.shields.io/badge/Python-3.10+-blue)](https://www.python.org/)
 [![License](https://img.shields.io/github/license/gxxHuang/ikuai-mcp-server)](LICENSE)
 [![Tests](https://github.com/gxxHuang/ikuai-mcp-server/actions/workflows/test.yml/badge.svg)](https://github.com/gxxHuang/ikuai-mcp-server/actions/workflows/test.yml)
 [![MCP](https://img.shields.io/badge/MCP-2025--11--25-blue)](https://modelcontextprotocol.io/)
