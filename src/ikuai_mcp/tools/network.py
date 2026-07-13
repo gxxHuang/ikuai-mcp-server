@@ -35,7 +35,7 @@ def register_tools(mcp, get_client):
     @mcp.tool
     def set_ipv6(enabled: bool) -> dict:
         """启用/禁用 IPv6"""
-        return get_client().edit("ipv6", {"enabled": 1 if enabled else 0})
+        return get_client().save_config("ipv6", {"enabled": 1 if enabled else 0})
 
     # ─── VPN 客户端 ───
 
@@ -155,7 +155,7 @@ def register_tools(mcp, get_client):
     @mcp.tool
     def set_dns_config(primary_dns: str = "", secondary_dns: str = "", enable_cache: bool = True) -> dict:
         """修改 DNS 配置"""
-        return get_client().edit("dns", {"dns1": primary_dns, "dns2": secondary_dns, "dns_cache": 1 if enable_cache else 0})
+        return get_client().save_config("dns", {"dns1": primary_dns, "dns2": secondary_dns, "dns_cache": 1 if enable_cache else 0})
 
     @mcp.tool(annotations={"readOnlyHint": True})
     def get_multi_line_dns() -> dict:
@@ -322,7 +322,7 @@ def register_tools(mcp, get_client):
     @mcp.tool
     def set_dmz(enabled: bool, internal_ip: str = "", interface: str = "") -> dict:
         """配置 DMZ 主机"""
-        return get_client().edit("netmap", {"enabled": 1 if enabled else 0, "ip_addr": internal_ip, "interface": interface})
+        return get_client().save_config("netmap", {"enabled": 1 if enabled else 0, "ip_addr": internal_ip, "interface": interface})
 
     # ═══ SD-WAN ═══
 

@@ -13,7 +13,7 @@ def register_tools(mcp, get_client):
     @mcp.tool
     def set_hostname(hostname: str) -> dict:
         """修改路由器主机名"""
-        return get_client().edit("basic", {"hostname": hostname})
+        return get_client().save_config("basic", {"hostname": hostname})
 
     # ═══ 双机热备 ═══
 

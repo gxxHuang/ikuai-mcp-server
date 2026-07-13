@@ -13,7 +13,7 @@ def register_tools(mcp, get_client):
     @mcp.tool
     def set_snmp(enabled: bool, community: str = "public") -> dict:
         """配置 SNMP"""
-        return get_client().edit("netsnmp", {"enabled": 1 if enabled else 0, "community": community})
+        return get_client().save_config("netsnmp", {"enabled": 1 if enabled else 0, "community": community})
 
     # ═══ 本地服务 ═══
 

@@ -231,7 +231,7 @@ def register_tools(mcp, get_client):
         existing = c.show_list("mac_comment")
         for item in existing.get("data", []):
             if item.get("mac") == mac:
-                return c.edit("mac_comment", {"id": item["id"], "mac": mac, "comment": name})
+                return c.save_config("mac_comment", {"id": item["id"], "mac": mac, "comment": name})
         return c.add("mac_comment", {"mac": mac, "comment": name})
 
     # ═══ 高级设置 ═══

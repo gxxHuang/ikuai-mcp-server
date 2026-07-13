@@ -126,6 +126,20 @@ class IKuaiClient:
         """执行 show 操作"""
         return self.call(func_name, "show", param)
 
+    def save(self, func_name: str, param: dict) -> dict:
+        """执行 save 操作（爱快多数配置修改需用 save 而非 edit）"""
+        return self.call(func_name, "save", param)
+
+    def save_config(self, func_name: str, updates: dict) -> dict:
+        """读取配置 → 合并修改 → save（一步完成配置修改）；save 不支持时回退 edit"""
+        current = self.show(func_name, {})
+        data = current.get("data", [{}])[0] if isinstance(current.get("data"), list) else current
+        data.update(updates)
+        try:
+            return self.call(func_name, "save", data)
+        except RouterAPIError:
+            return self.call(func_name, "edit", data)
+
     def show_list(
         self,
         func_name: str,

@@ -42,12 +42,12 @@ def register_tools(mcp, get_client):
     @mcp.tool
     def set_wifi_ssid(ssid: str, radio: str = "2g") -> dict:
         """修改 Wi-Fi SSID"""
-        return get_client().edit("wifiSettings", {"ssid": ssid, "radio": radio})
+        return get_client().save_config("wifiSettings", {"ssid": ssid, "radio": radio})
 
     @mcp.tool
     def set_wifi_password(password: str, radio: str = "2g") -> dict:
         """修改 Wi-Fi 密码 (至少8位)"""
-        return get_client().edit("wifiSettings", {"passwd": password, "radio": radio})
+        return get_client().save_config("wifiSettings", {"passwd": password, "radio": radio})
 
     @mcp.tool
     def toggle_wifi(enabled: bool, radio: str = "2g") -> dict:
