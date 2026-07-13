@@ -1,0 +1,2 @@
+[console_scripts]
+ikuai-mcp = ikuai_mcp.server:main

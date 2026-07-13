@@ -1,0 +1,67 @@
+[project]
+name = "ikuai-mcp-server"
+version = "1.0.0"
+description = "爱快 iKuai 路由器全功能 MCP Server — 229 个工具覆盖 Web 后台全部功能"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "gxxHuang", email = "qqhuangweimin@gmail.com" }
+]
+keywords = [
+    "ikuai", "router", "mcp", "model-context-protocol", "fastmcp",
+    "network", "automation", "claude", "ai-agent"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: System :: Networking",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">=3.10"
+dependencies = [
+    "fastmcp>=3.0.0",
+    "requests>=2.28.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/gxxHuang/ikuai-mcp-server"
+Documentation = "https://github.com/gxxHuang/ikuai-mcp-server#readme"
+Repository = "https://github.com/gxxHuang/ikuai-mcp-server"
+Issues = "https://github.com/gxxHuang/ikuai-mcp-server/issues"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "pytest-cov>=5.0",
+    "ruff>=0.5",
+    "pre-commit>=3.0",
+]
+
+[project.scripts]
+ikuai-mcp = "ikuai_mcp.server:main"
+
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+line-length = 140
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

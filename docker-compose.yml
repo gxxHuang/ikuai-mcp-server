@@ -1,0 +1,11 @@
+services:
+  ikuai-mcp:
+    build: .
+    container_name: ikuai-mcp-server
+    ports:
+      - "8000:8000"
+    environment:
+      - IKUAI_URL=${IKUAI_URL:-http://192.168.9.1}
+      - IKUAI_USERNAME=${IKUAI_USERNAME:-admin}
+      - IKUAI_PASSWORD=${IKUAI_PASSWORD}
+    restart: unless-stopped
