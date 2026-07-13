@@ -1,7 +1,7 @@
 """Tests for tool modules"""
 from unittest.mock import MagicMock
 
-from src.ikuai_mcp.client import IKuaiClient
+from ikuai_mcp.client import IKuaiClient
 
 
 class TestSystemTools:
