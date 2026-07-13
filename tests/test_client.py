@@ -2,7 +2,7 @@
 
 import pytest
 
-from src.ikuai_mcp.client import AuthenticationError, IKuaiClient, RouterAPIError
+from ikuai_mcp.client import AuthenticationError, IKuaiClient, RouterAPIError
 
 
 class TestIKuaiClient:
