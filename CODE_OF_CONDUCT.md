@@ -33,7 +33,7 @@
 ## 执行
 
 可以通过以下方式报告侮辱、骚扰或其他不可接受的行为：
-- 📧 **qqhuangweimin@gmail.com** （私密）
+- 📧 **527luosifen@gmail.com** （私密）
 - 🐛 [GitHub Issues](https://github.com/gxxHuang/ikuai-mcp-server/issues) （公开）
 
 所有投诉将被审查和调查，并将产生被认为必要且适合具体情况的回应。维护者有义务对事件报告者保密。
