@@ -8,8 +8,8 @@
 
 ```text
 "查看在线设备"          → 终端 IP/MAC/流量一览
-"把 192.168.9.100 限速" → 一键添加 IP 限速
-"添加端口映射"          → 8080 → 内网 192.168.9.50
+"给某个设备限速"        → 一键添加 IP 限速
+"添加端口映射"          → 公网端口 → 内网设备
 "改 Wi-Fi 密码"          → 完成
 "看下今天谁掉线了"      → 终端上下线记录
 ```
@@ -39,12 +39,12 @@ pip install git+https://github.com/gxxHuang/ikuai-mcp-server.git
 cp .env.example .env
 ```
 
-编辑 `.env`,填入路由器信息:
+编辑 `.env`,填**你自己路由器**的信息:
 
 ```ini
-IKUAI_URL=http://192.168.9.1
-IKUAI_USERNAME=admin
-IKUAI_PASSWORD=你的密码
+IKUAI_URL=http://192.168.1.1        # 改成你路由器的地址
+IKUAI_USERNAME=admin                # 你的登录账号
+IKUAI_PASSWORD=你的路由器密码       # 你的登录密码
 ```
 
 > 企业版 4.x 支持全部功能;免费版/3.x 部分 API 不可用,见[兼容性](#兼容性)。
@@ -60,14 +60,16 @@ IKUAI_PASSWORD=你的密码
       "command": "ikuai-mcp",
       "args": [],
       "env": {
-        "IKUAI_URL": "http://192.168.9.1",
+        "IKUAI_URL": "http://192.168.1.1",
         "IKUAI_USERNAME": "admin",
-        "IKUAI_PASSWORD": "你的密码"
+        "IKUAI_PASSWORD": "你的路由器密码"
       }
     }
   }
 }
 ```
+
+> 这里的 `IKUAI_URL` / `IKUAI_USERNAME` / `IKUAI_PASSWORD` 请替换成**你自己路由器**的实际值。
 
 **Cursor** — 同样的配置写到 `.cursor/mcp.json`。
 
@@ -83,7 +85,7 @@ python -m ikuai_mcp.server --transport http --port 8000
 
 - "查看路由器当前状态" — CPU / 内存 / 流量 / 版本
 - "列出所有在线设备" — 终端 IP / MAC / 流量
-- "把 192.168.9.100 限速到 10Mbps" — 添加 IP 限速
+- "给 192.168.1.100 限速到 10Mbps" — 添加 IP 限速
 - "开启 SSH" — 启用隐藏的 SSH 服务
 - "查看今天的登录日志" — 认证日志一览
 - "重启客厅的 AP" — 重启指定无线 AP
