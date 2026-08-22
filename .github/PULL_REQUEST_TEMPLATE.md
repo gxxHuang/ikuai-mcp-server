@@ -1,9 +1,19 @@
-## Description
-## Type
-- [ ] Bug fix
-- [ ] - [ ] Feature
-- [ ] - [ ] Docs
-- [ ] ## Checklist
-- [ ] - [ ] ruff check .
-- [ ] - [ ] pytest
-- [ ] 
+## 变更描述
+
+请描述这个 PR 做了什么改动,以及为什么。
+
+## 类型
+
+- [ ] Bug 修复
+- [ ] 新功能
+- [ ] 文档更新
+- [ ] 其他
+
+## 测试
+
+- [ ] `ruff check .` 通过
+- [ ] `pytest` 通过
+
+## 相关问题
+
+关联的 Issue 或讨论链接(如有)。
