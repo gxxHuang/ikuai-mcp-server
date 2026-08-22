@@ -5,7 +5,7 @@ description = "爱快 iKuai 路由器全功能 MCP Server — 229 个工具覆�
 readme = "README.md"
 license = { text = "MIT" }
 authors = [
-    { name = "gxxHuang", email = "qqhuangweimin@gmail.com" }
+    { name = "gxxHuang", email = "527luosifen@gmail.com" }
 ]
 keywords = [
     "ikuai", "router", "mcp", "model-context-protocol", "fastmcp",
