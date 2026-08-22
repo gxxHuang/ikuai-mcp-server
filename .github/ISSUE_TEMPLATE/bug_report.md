@@ -1,14 +1,33 @@
 ---
 name: Bug Report
-about: 报告bug
-title: "[Bug] "
+about: 报告 bug
 labels: bug
 ---
 
-## Describe
-## Environment
-- Model:
-- - Firmware:
-  - - Python:
-    - 
-    
+## 问题描述
+
+请清楚描述你遇到的问题。
+
+## 复现步骤
+
+1. 执行什么操作
+2. 发生了什么
+3. 期望是什么
+
+## 环境
+
+- 路由器型号: (如 IK-Q3000)
+- 固件版本: (如 4.0.303)
+- 固件类型: (企业版 / 免费版)
+- Python 版本: (如 3.11)
+- AI 客户端: (Claude Desktop / Cursor / HTTP)
+
+## 日志 / 报错信息
+
+```
+粘贴相关日志或报错信息
+```
+
+## 其他
+
+补充任何有帮助的信息。
