@@ -16,11 +16,13 @@
 
 ### 1. 安装
 
+从 GitHub 源码安装(需要 [Git](https://git-scm.com/) 和 **Python 3.10+**):
+
 ```bash
-pip install ikuai-mcp-server
+pip install git+https://github.com/gxxHuang/ikuai-mcp-server.git
 ```
 
-需要 **Python 3.10+** 和一台 **iKuai 路由器**(企业版 4.x 全功能;免费版部分 API 不可用)。
+需要一台 **iKuai 路由器**(企业版 4.x 全功能;免费版部分 API 不可用)。
 
 ### 2. 配置
 
