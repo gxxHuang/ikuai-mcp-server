@@ -1,9 +1,25 @@
-## Description
-## Type
-- [ ] Bug fix
-- [ ] - [ ] Feature
-- [ ] - [ ] Docs
-- [ ] ## Checklist
-- [ ] - [ ] ruff check .
-- [ ] - [ ] pytest
-- [ ] 
+---
+name: Feature Request
+about: 建议新功能
+labels: enhancement
+---
+
+## 你希望添加什么功能？
+
+请描述你想添加的功能。
+
+## 使用场景
+
+这个功能解决什么问题？在什么场景下需要它？
+
+## 期望行为
+
+希望它如何工作？可以描述交互方式或调用方式。
+
+## 备选方案
+
+有没有考虑过其他实现方式？
+
+## 额外信息
+
+相关截图、示例或任何有帮助的资料。
