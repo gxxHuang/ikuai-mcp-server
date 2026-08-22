@@ -43,9 +43,9 @@ cp .env.example .env
 编辑 `.env`,填**你自己路由器**的信息:
 
 ```ini
-IKUAI_URL=http://192.168.1.1        # 改成你路由器的地址
-IKUAI_USERNAME=admin                # 你的登录账号
-IKUAI_PASSWORD=你的路由器密码       # 你的登录密码
+IKUAI_URL=http://<你的路由器IP>
+IKUAI_USERNAME=<你的登录账号>
+IKUAI_PASSWORD=<你的登录密码>
 ```
 
 > 企业版 4.x 支持全部功能;免费版/3.x 部分 API 不可用,见[兼容性](#兼容性)。
@@ -61,16 +61,16 @@ IKUAI_PASSWORD=你的路由器密码       # 你的登录密码
       "command": "ikuai-mcp",
       "args": [],
       "env": {
-        "IKUAI_URL": "http://192.168.1.1",
-        "IKUAI_USERNAME": "admin",
-        "IKUAI_PASSWORD": "你的路由器密码"
+        "IKUAI_URL": "http://<你的路由器IP>",
+        "IKUAI_USERNAME": "<你的登录账号>",
+        "IKUAI_PASSWORD": "<你的登录密码>"
       }
     }
   }
 }
 ```
 
-> 这里的 `IKUAI_URL` / `IKUAI_USERNAME` / `IKUAI_PASSWORD` 请替换成**你自己路由器**的实际值。
+> 把 `<你的路由器IP>`、`<你的登录账号>`、`<你的登录密码>` 替换成你自己的实际值,并去掉尖括号。
 
 **Cursor** — 同样的配置写到 `.cursor/mcp.json`。
 
@@ -86,7 +86,7 @@ python -m ikuai_mcp.server --transport http --port 8000
 
 - "查看路由器当前状态" — CPU / 内存 / 流量 / 版本
 - "列出所有在线设备" — 终端 IP / MAC / 流量
-- "给 192.168.1.100 限速到 10Mbps" — 添加 IP 限速
+- "给某个设备限速到 10Mbps" — 添加 IP 限速
 - "开启 SSH" — 调用 API 开启 Web 界面没有开关的 SSH 服务
 - "查看今天的登录日志" — 认证日志一览
 - "重启客厅的 AP" — 重启指定无线 AP
