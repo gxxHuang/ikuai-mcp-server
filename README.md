@@ -1,6 +1,5 @@
 # iKuai MCP Server
 
-[![PyPI version](https://img.shields.io/pypi/v/ikuai-mcp-server)](https://pypi.org/project/ikuai-mcp-server/)
 [![License: MIT](https://img.shields.io/github/license/gxxHuang/ikuai-mcp-server)](LICENSE)
 [![MCP](https://img.shields.io/badge/MCP-2025--11--25-blue)](https://modelcontextprotocol.io/)
 
