@@ -10,7 +10,7 @@
 
 如果你发现安全漏洞，**请不要在公开 Issue 中报告**。
 
-请发送邮件到 **qqhuangweimin@gmail.com**，我们会尽快回复。
+请发送邮件到 **527luosifen@gmail.com**，我们会尽快回复。
 
 ### 期望内容
 
