@@ -4,7 +4,7 @@
 [![MCP](https://img.shields.io/badge/MCP-2025--11--25-blue)](https://modelcontextprotocol.io/)
 [![Python](https://img.shields.io/badge/Python-3.10+-blue)](https://www.python.org/)
 
-**让 AI 直接管理你的爱快路由器。** 基于 [FastMCP](https://github.com/jlowin/fastmcp) 构建,把 iKuai Web 后台 **229 个功能**变成自然语言对话——不用再记那堆网页操作。
+**让 AI 直接管理你的爱快路由器。** 基于 [FastMCP](https://github.com/jlowin/fastmcp) 构建,把 iKuai Web 后台 **229 个功能**变成自然语言对话。
 
 ```text
 "查看在线设备"          → 终端 IP/MAC/流量一览
