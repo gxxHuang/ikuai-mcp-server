@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -e .
 
 EXPOSE 8000
 
-ENV IKUAI_URL=http://192.168.9.1
+ENV IKUAI_URL=http://192.168.1.1
 ENV IKUAI_USERNAME=admin
 ENV IKUAI_PASSWORD=""
 
