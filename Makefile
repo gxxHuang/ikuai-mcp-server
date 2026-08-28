@@ -21,12 +21,3 @@ clean: ## 清理
 
 dev: ## 开发模式运行
 	python -m ikuai_mcp.server
-
-docker-build: ## 构建 Docker 镜像
-	docker build -t ikuai-mcp-server .
-
-docker-run: ## 运行 Docker 容器
-	docker-compose up -d
-
-docker-stop: ## 停止 Docker 容器
-	docker-compose down
