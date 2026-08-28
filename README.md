@@ -22,7 +22,6 @@
 - **读写双模式**:查询类工具标记为只读,修改类工具(ACL/限速/端口映射等)读写分离
 - **危险操作防护**:重启、固件升级、改管理员密码等操作要求 `confirm=True` 显式确认
 - **双传输模式**:stdio(接入 Claude Desktop/Cursor)或 HTTP(脚本调用/远程集成)
-- **Docker 一键部署**:`docker-compose up -d` 直接跑
 
 ## 快速开始
 
@@ -116,13 +115,6 @@ python -m ikuai_mcp.server --transport http --port 8000
 1. **只读标注**:所有查询工具标记 `readOnlyHint`,客户端可据此拒绝误操作
 2. **二次确认**:`change_admin_password`、`upgrade_ap_firmware` 等危险操作要求 `confirm=True` 显式传入
 3. **凭据隔离**:密码仅通过 `.env` / 环境变量注入,不出现在代码和日志中;仅限局域网访问,不暴露公网
-
-## Docker
-
-```bash
-cp .env.example .env   # 必做,否则容器内密码为空
-docker-compose up -d
-```
 
 ## 兼容性
 
