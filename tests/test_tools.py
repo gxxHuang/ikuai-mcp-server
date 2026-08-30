@@ -47,7 +47,7 @@ class TestAdvancedTools:
         client = MagicMock(spec=IKuaiClient)
         running = {"data": [{"status": 1, "response": "PING google.com ...\n"}]}
         client.call.side_effect = [{}, running, {}]
-        moments = iter([0, 1, 11])
+        moments = iter([0, 1, 18])
         monkeypatch.setattr("ikuai_mcp.tools.advanced.time.monotonic", lambda: next(moments))
         monkeypatch.setattr("ikuai_mcp.tools.advanced.time.sleep", lambda _seconds: None)
 
@@ -55,6 +55,19 @@ class TestAdvancedTools:
 
         assert result == {**running, "timed_out": True}
         client.call.assert_called_with("Ping", "stop", {})
+
+    def test_ping_waits_for_each_lost_packet_timeout(self, monkeypatch):
+        client = MagicMock(spec=IKuaiClient)
+        running = {"data": [{"status": 1, "response": "PING google.com ...\n"}]}
+        completed = {"data": [{"status": 0, "response": "4 packets transmitted, 0 received"}]}
+        client.call.side_effect = [{}, running, completed, {}]
+        moments = iter([0, 1, 11])
+        monkeypatch.setattr("ikuai_mcp.tools.advanced.time.monotonic", lambda: next(moments))
+        monkeypatch.setattr("ikuai_mcp.tools.advanced.time.sleep", lambda _seconds: None)
+
+        result = _run_ping(client, "google.com", count=4, interface="auto")
+
+        assert result == completed
 
 
 class TestSecurityTools:

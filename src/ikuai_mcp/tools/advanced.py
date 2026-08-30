@@ -12,7 +12,7 @@ def _run_ping(client, target: str, count: int, interface: str) -> dict:
         "count": count,
         "interface": interface,
     })
-    deadline = time.monotonic() + min(max(count + 5, 10), 55)
+    deadline = time.monotonic() + min(max(count * 3 + 5, 10), 55)
     result = {}
     try:
         while time.monotonic() < deadline:
