@@ -1,5 +1,30 @@
 """高级服务工具 — SNMP/本地服务/内网穿透/路由体检/健康检测/工具包(抓包/测速/Ping/Trace/吞吐/子网换算/网络唤醒)"""
 
+import time
+
+
+def _run_ping(client, target: str, count: int, interface: str) -> dict:
+    """按爱快 Web 后台的 start → show → stop 流程执行 Ping。"""
+    client.call("Ping", "start", {
+        "host": target,
+        "proto": "ipv4",
+        "l4proto": "icmp",
+        "count": count,
+        "interface": interface,
+    })
+    deadline = time.monotonic() + min(max(count * 3 + 5, 10), 55)
+    result = {}
+    try:
+        while time.monotonic() < deadline:
+            result = client.call("Ping", "show", {})
+            data = result.get("data") or []
+            if data and data[0].get("status") == 0:
+                return result
+            time.sleep(1)
+    finally:
+        client.call("Ping", "stop", {})
+    return {**result, "timed_out": True}
+
 
 def register_tools(mcp, get_client):
 
@@ -67,7 +92,7 @@ def register_tools(mcp, get_client):
     # ═══ Ping 测试 ═══
 
     @mcp.tool
-    def ping_test(target: str, count: int = 4, interface: str = "") -> dict:
+    def ping_test(target: str, count: int = 4, interface: str = "auto") -> dict:
         """执行 Ping 测试
 
         Args:
@@ -75,7 +100,7 @@ def register_tools(mcp, get_client):
             count: 发包次数
             interface: 出口接口
         """
-        return get_client().call("Ping", "ping", {"host": target, "count": count, "interface": interface})
+        return _run_ping(get_client(), target, count, interface)
 
     # ═══ 路由追踪 ═══
 

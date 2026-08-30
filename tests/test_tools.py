@@ -2,6 +2,7 @@
 from unittest.mock import MagicMock
 
 from ikuai_mcp.client import IKuaiClient
+from ikuai_mcp.tools.advanced import _run_ping
 
 
 class TestSystemTools:
@@ -19,6 +20,54 @@ class TestSystemTools:
 
         result = client.show_list("monitor_lanip")
         assert result["total"] == 1
+
+
+class TestAdvancedTools:
+    def test_ping_uses_start_show_stop_api_flow(self):
+        client = MagicMock(spec=IKuaiClient)
+        completed = {"data": [{"status": 0, "response": "4 packets transmitted, 4 received"}]}
+        client.call.side_effect = [{}, completed, {}]
+
+        result = _run_ping(client, "google.com", count=4, interface="auto")
+
+        assert result == completed
+        assert client.call.call_args_list == [
+            (("Ping", "start", {
+                "host": "google.com",
+                "proto": "ipv4",
+                "l4proto": "icmp",
+                "count": 4,
+                "interface": "auto",
+            }),),
+            (("Ping", "show", {}),),
+            (("Ping", "stop", {}),),
+        ]
+
+    def test_ping_returns_partial_result_when_router_does_not_finish(self, monkeypatch):
+        client = MagicMock(spec=IKuaiClient)
+        running = {"data": [{"status": 1, "response": "PING google.com ...\n"}]}
+        client.call.side_effect = [{}, running, {}]
+        moments = iter([0, 1, 18])
+        monkeypatch.setattr("ikuai_mcp.tools.advanced.time.monotonic", lambda: next(moments))
+        monkeypatch.setattr("ikuai_mcp.tools.advanced.time.sleep", lambda _seconds: None)
+
+        result = _run_ping(client, "google.com", count=4, interface="auto")
+
+        assert result == {**running, "timed_out": True}
+        client.call.assert_called_with("Ping", "stop", {})
+
+    def test_ping_waits_for_each_lost_packet_timeout(self, monkeypatch):
+        client = MagicMock(spec=IKuaiClient)
+        running = {"data": [{"status": 1, "response": "PING google.com ...\n"}]}
+        completed = {"data": [{"status": 0, "response": "4 packets transmitted, 0 received"}]}
+        client.call.side_effect = [{}, running, completed, {}]
+        moments = iter([0, 1, 11])
+        monkeypatch.setattr("ikuai_mcp.tools.advanced.time.monotonic", lambda: next(moments))
+        monkeypatch.setattr("ikuai_mcp.tools.advanced.time.sleep", lambda _seconds: None)
+
+        result = _run_ping(client, "google.com", count=4, interface="auto")
+
+        assert result == completed
 
 
 class TestSecurityTools:
