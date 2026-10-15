@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 爱快 iKuai 路由器全功能 MCP Server
-229 个工具 · 149 个 API 端点 · 覆盖 iKuai 4.0.303 企业版 Web 后台全部功能
+248 个工具 · 覆盖 iKuai 3.x / 4.x Web 后台功能
 
 用法:
     python -m ikuai_mcp.server                           # stdio 模式 (Claude Desktop)
