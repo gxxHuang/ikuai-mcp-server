@@ -1,7 +1,7 @@
 [project]
 name = "ikuai-mcp-server"
-version = "1.0.0"
-description = "爱快 iKuai 路由器全功能 MCP Server — 229 个工具覆盖 Web 后台全部功能"
+version = "1.0.1"
+description = "爱快 iKuai 路由器全功能 MCP Server — 248 个工具覆盖 Web 后台全部功能"
 readme = "README.md"
 license = { text = "MIT" }
 authors = [
