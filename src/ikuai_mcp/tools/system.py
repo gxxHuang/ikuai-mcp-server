@@ -7,13 +7,25 @@ def register_tools(mcp, get_client):
 
     @mcp.tool(annotations={"readOnlyHint": True})
     def get_system_overview() -> dict:
-        """获取系统概览：CPU/内存/流量/版本/运行时间/在线用户"""
-        return get_client().show("homepage", {"TYPE": "sysstat"})
+        """获取系统概览：CPU/内存/流量/版本/运行时间/在线用户
+
+        实测：``sysstat`` 用 ``TYPE=all`` 返回最完整数据。
+        """
+        return get_client().show("sysstat", {"TYPE": "all"})
+
+    @mcp.tool(annotations={"readOnlyHint": True})
+    def get_version_info() -> dict:
+        """获取设备版本信息（型号/固件版本/架构/SN/是否企业版）"""
+        res = get_client().show("sysstat", {"TYPE": "verinfo"})
+        return res.get("verinfo", res) if isinstance(res, dict) else res
 
     @mcp.tool(annotations={"readOnlyHint": True})
     def get_wan_status() -> dict:
-        """获取 WAN 口实时状态：IP/速率/连接数/AC 状态"""
-        return get_client().show("homepage", {"TYPE": "wan_speed,sysstat,ac_status", "interface": ""})
+        """获取 WAN 口实时状态：IP/速率/连接数/AC 状态
+
+        实测：``homepage`` 只认 ``TYPE=all``。
+        """
+        return get_client().show("homepage", {"TYPE": "all"})
 
     @mcp.tool(annotations={"readOnlyHint": True})
     def get_memory_history(datetype: str = "day-5min") -> dict:
@@ -41,7 +53,7 @@ def register_tools(mcp, get_client):
     @mcp.tool(annotations={"readOnlyHint": True})
     def get_wireless_monitoring() -> dict:
         """获取无线监控：AP 数量/在线状态"""
-        return get_client().show("homepage", {"TYPE": "wan_speed,sysstat,ac_status", "interface": "wan2"})
+        return get_client().show("ac_status", {"TYPE": "all"})
 
     # ─── 终端监控 ───
 
@@ -61,8 +73,11 @@ def register_tools(mcp, get_client):
 
     @mcp.tool(annotations={"readOnlyHint": True})
     def get_registration_status() -> dict:
-        """获取云服务注册/绑定状态 (faststart)"""
-        return get_client().show("faststart", {"TYPE": "register"})
+        """获取云服务注册/绑定状态
+
+        实测：``faststart`` 只认 ``TYPE=all``。
+        """
+        return get_client().show("faststart", {"TYPE": "all"})
 
     @mcp.tool(annotations={"readOnlyHint": True})
     def get_behavior_insight() -> dict:

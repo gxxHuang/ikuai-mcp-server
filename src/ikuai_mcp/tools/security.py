@@ -209,13 +209,17 @@ def register_tools(mcp, get_client):
 
     @mcp.tool(annotations={"readOnlyHint": True})
     def get_traffic_audit_by_mac() -> dict:
-        """按 MAC 审计终端流量"""
-        return get_client().show_list("audit_terminal_stat_mac")
+        """按 MAC 审计终端流量
+
+        实测：设备没有 ``audit_terminal_stat_mac``（返回 1003），
+        统一入口是 ``audit_terminal_stat``。
+        """
+        return get_client().show("audit_terminal_stat", {"TYPE": "total,data"})
 
     @mcp.tool(annotations={"readOnlyHint": True})
     def get_traffic_audit_by_user() -> dict:
-        """按账号审计终端流量"""
-        return get_client().show_list("audit_terminal_stat_user")
+        """按账号审计终端流量（同上，走 audit_terminal_stat）"""
+        return get_client().show("audit_terminal_stat", {"TYPE": "total,data"})
 
     # ═══ 终端名称管理 ═══
 

@@ -24,13 +24,24 @@ def register_tools(mcp, get_client):
 
     @mcp.tool(annotations={"readOnlyHint": True})
     def get_ipv6_wan_config() -> dict:
-        """获取 IPv6 外网设置"""
-        return get_client().show_list("ipv6_extranet_setting")
+        """获取 IPv6 外网设置
+
+        实测：设备没有 ``ipv6_extranet_setting``（返回 1003），
+        IPv6 内外网配置统一走 ``ipv6``，外网条目在返回列表中。
+        """
+        res = get_client().show("ipv6", {"TYPE": "data,total"})
+        if isinstance(res, dict) and isinstance(res.get("data"), list):
+            # 外网条目 internet 字段非空（dhcp/static/pppoe 等）
+            res = {**res, "data": [x for x in res["data"] if x.get("internet")]}
+        return res
 
     @mcp.tool(annotations={"readOnlyHint": True})
     def get_ipv6_lan_config() -> dict:
-        """获取 IPv6 内网设置"""
-        return get_client().show_list("ipv6_intranet_setting")
+        """获取 IPv6 内网设置（前缀下发/RA/DHCPv6）"""
+        res = get_client().show("ipv6", {"TYPE": "data,total"})
+        if isinstance(res, dict) and isinstance(res.get("data"), list):
+            res = {**res, "data": [x for x in res["data"] if not x.get("internet")]}
+        return res
 
     @mcp.tool
     def set_ipv6(enabled: bool) -> dict:
@@ -149,13 +160,20 @@ def register_tools(mcp, get_client):
 
     @mcp.tool(annotations={"readOnlyHint": True})
     def get_dns_config() -> dict:
-        """获取 DNS 加速服务配置（通过多线路 DNS 接口读取）"""
-        return get_client().show_list("dns_replace")
+        """获取 DNS 服务配置（含 DNS 缓存/多线路 DNS）
+
+        实测：``dns`` 只认 ``TYPE=all``。
+        """
+        return get_client().show("dns", {"TYPE": "all"})
 
     @mcp.tool
     def set_dns_config(primary_dns: str = "", secondary_dns: str = "", enable_cache: bool = True) -> dict:
-        """修改 DNS 配置"""
-        return get_client().save_config("dns", {"dns1": primary_dns, "dns2": secondary_dns, "dns_cache": 1 if enable_cache else 0})
+        """修改 DNS 配置
+
+        实测：``dns`` 只接受 ``TYPE=all``，用 ``TYPE=data`` 会得到 2007。
+        """
+        return get_client().save_config("dns", {"dns1": primary_dns, "dns2": secondary_dns,
+                                                "dns_cache": 1 if enable_cache else 0})
 
     @mcp.tool(annotations={"readOnlyHint": True})
     def get_multi_line_dns() -> dict:
@@ -183,18 +201,23 @@ def register_tools(mcp, get_client):
     def get_routing_table(ip_type: str = "v4") -> dict:
         """查看当前路由表
 
+        实测：设备没有 ``static_rt_table_ipv4/ipv6``（返回 1003）。
+        查询已有静态路由请用 ``list_static_routes``；实时路由表在
+        ``static_rt`` 的 ``TYPE=data`` 里。
+
         Args:
             ip_type: "v4" 或 "v6"
         """
-        fn = "static_rt_table_ipv4" if ip_type == "v4" else "static_rt_table_ipv6"
-        return get_client().show_list(fn)
+        if ip_type == "v6":
+            return get_client().show("ipv6_static", {"TYPE": "data,total"})
+        return get_client().show("static_rt", {"TYPE": "data"})
 
     # ═══ 跨三层服务 ═══
 
     @mcp.tool(annotations={"readOnlyHint": True})
     def get_cross_layer3_config() -> dict:
         """获取跨三层服务配置"""
-        return get_client().show_list("netsnmpc")
+        return get_client().show_list("netsnmpc", paginate=False)
 
     # ═══ 路由对象（地址分组）═══
 

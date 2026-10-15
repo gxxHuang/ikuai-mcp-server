@@ -178,5 +178,18 @@ def register_tools(mcp, get_client):
 
     @mcp.tool(annotations={"readOnlyHint": True})
     def list_tasks() -> dict:
-        """列出任务管理中的任务"""
-        return get_client().show_list("task_management")
+        """列出任务管理中的任务
+
+        实测：设备用 ``task_queue`` 而非 ``task_management``（后者返回 1003）。
+        """
+        return get_client().show("task_queue", {"TYPE": "data"})
+
+    @mcp.tool
+    def retry_task(task_id: str) -> dict:
+        """重试任务"""
+        return get_client().call("task_queue", "retry", {"task_id": task_id})
+
+    @mcp.tool
+    def abort_task(task_id: str) -> dict:
+        """中止任务"""
+        return get_client().call("task_queue", "abort", {"task_id": task_id})

@@ -106,23 +106,35 @@ def register_tools(mcp, get_client):
 
     @mcp.tool(annotations={"readOnlyHint": True})
     def list_vpn_accounts(vpn_type: str = "pptp") -> dict:
-        """列出 VPN 账号"""
-        fn_map = {"pptp": "pptp_user", "l2tp": "l2tp_user", "openvpn": "openvpn_user"}
-        return get_client().show_list(fn_map.get(vpn_type, "pptp_user"))
+        """列出 VPN 客户端配置
+
+        实测：设备没有 ``pptp_user``/``l2tp_user``/``openvpn_user``/``ike_user``
+        （均返回 1003）。这些 VPN 的客户端配置入口分别是
+        ``pptp_client``/``l2tp_client``/``openvpn-client``/``ike_client``。
+        """
+        fn_map = {"pptp": "pptp_client", "l2tp": "l2tp_client",
+                  "openvpn": "openvpn-client", "ike": "ike_client"}
+        return get_client().show_list(fn_map.get(vpn_type, "pptp_client"), paginate=False)
 
     @mcp.tool
     def add_vpn_account(vpn_type: str, username: str, password: str,
                         ip_type: str = "auto", comment: str = "") -> dict:
-        """添加 VPN 账号"""
-        fn_map = {"pptp": "pptp_user", "l2tp": "l2tp_user", "openvpn": "openvpn_user"}
-        return get_client().add(fn_map.get(vpn_type, "pptp_user"),
+        """添加 VPN 客户端配置
+
+        Args:
+            vpn_type: "pptp" / "l2tp" / "openvpn" / "ike"
+        """
+        fn_map = {"pptp": "pptp_client", "l2tp": "l2tp_client",
+                  "openvpn": "openvpn-client", "ike": "ike_client"}
+        return get_client().add(fn_map.get(vpn_type, "pptp_client"),
             {"user": username, "pass": password, "ip_type": ip_type, "comment": comment})
 
     @mcp.tool
     def delete_vpn_account(vpn_type: str, user_id: int) -> dict:
-        """删除 VPN 账号"""
-        fn_map = {"pptp": "pptp_user", "l2tp": "l2tp_user", "openvpn": "openvpn_user"}
-        return get_client().delete(fn_map.get(vpn_type, "pptp_user"), {"id": user_id})
+        """删除 VPN 客户端配置"""
+        fn_map = {"pptp": "pptp_client", "l2tp": "l2tp_client",
+                  "openvpn": "openvpn-client", "ike": "ike_client"}
+        return get_client().delete(fn_map.get(vpn_type, "pptp_client"), {"id": user_id})
 
     # ═══ 套餐管理 ═══
 
@@ -152,13 +164,20 @@ def register_tools(mcp, get_client):
 
     @mcp.tool(annotations={"readOnlyHint": True})
     def list_proxy_dial_accounts() -> dict:
-        """列出代拨账号"""
-        return get_client().show_list("pppoe_proxy_user")
+        """列出代拨账号
+
+        实测：设备没有 ``pppoe_proxy_user``（返回 1003），
+        代拨账号入口是 ``pppoe_proxy``。
+        """
+        return get_client().show_list("pppoe_proxy", paginate=False)
 
     @mcp.tool(annotations={"readOnlyHint": True})
     def list_proxy_dial_online() -> dict:
-        """列出代拨在线账号"""
-        return get_client().show_list("pppoe_proxy_online")
+        """列出代拨在线账号
+
+        注意：``pppoe_proxy_online`` 在 4.0.313 免费版上返回 1003（企业版功能）。
+        """
+        return get_client().show_list("pppoe_proxy_online", paginate=False)
 
     # ═══ 通知推送 ═══
 
