@@ -58,8 +58,36 @@ reg_settings(mcp, get_client)
 
 
 def main():
-    """入口函数"""
-    mcp.run()
+    """入口函数
+
+    默认 stdio 模式，供 Claude Desktop / Cursor 等 AI 客户端接入；
+    传 ``--transport`` 可切换为 HTTP/SSE，供脚本或远程集成调用：
+
+        python -m ikuai_mcp.server                                # stdio
+        python -m ikuai_mcp.server --transport http --port 8000    # HTTP
+    """
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        prog="ikuai-mcp",
+        description="爱快 iKuai 路由器 MCP Server",
+    )
+    parser.add_argument(
+        "--transport",
+        default="stdio",
+        choices=["stdio", "http", "sse", "streamable-http"],
+        help="传输方式，默认 stdio",
+    )
+    parser.add_argument("--host", default="127.0.0.1",
+                        help="HTTP/SSE 监听地址，默认 127.0.0.1")
+    parser.add_argument("--port", type=int, default=8000,
+                        help="HTTP/SSE 监听端口，默认 8000")
+    args = parser.parse_args()
+
+    if args.transport == "stdio":
+        mcp.run()
+    else:
+        mcp.run(transport=args.transport, host=args.host, port=args.port)
 
 
 if __name__ == "__main__":
