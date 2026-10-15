@@ -118,6 +118,31 @@ if data.get("code") != 0 and data.get("Result") != 10000:   # ❌
 | 2022 | 升级未成功 |
 | 3001 | action 不合法 / 参数不合法 |
 
+### 🔧 发布后补修
+
+**HTTP 传输模式此前不生效。** `server.py` 的 `main()` 只有一句 `mcp.run()`，
+没有参数解析，README 与模块 docstring 里宣传的
+`python -m ikuai_mcp.server --transport http --port 8000` 会被**静默忽略** ——
+实测日志输出 `with transport 'stdio'`，8000 端口无监听，进程在 stdin EOF 后退出。
+现已补上 `argparse`，支持 `--transport {stdio,http,sse,streamable-http}`
+与 `--host` / `--port`，默认仍是 stdio。
+
+**逐模块工具数与代码不符。** 总数 248 正确，但 3 个模块的分项数字与
+实际注册数对不上（-1 / -1 / +2，正好抵消）：
+
+| 模块 | 原文档 | 实际 |
+|---|---|---|
+| 系统监控 | 19 | **18** |
+| 无线服务 | 22 | **21** |
+| 高级服务 | 30 | **32** |
+
+README 的「功能覆盖」表与 `docs/COVERAGE.md` 已按实际注册数订正，
+并补齐了此前遗漏的工具名描述（如 `get_memory_history`、`get_policy_monitoring`、
+`get_backup_snapshots`、`get_reboot_schedule`、`reboot_router` 等）。
+
+> 订正依据：拉取 tag `v1.0.1` 源码在 Python 3.12 + fastmcp 4.1.0 下实装，
+> 逐模块注册后计数并与 248 个工具名逐一核对。
+
 ---
 
 ## [1.0.0] - 2026-07-13
